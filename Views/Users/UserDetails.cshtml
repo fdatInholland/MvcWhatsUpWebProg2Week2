@@ -1,0 +1,20 @@
+﻿@* Instead of the View getting a Model back we wabt to recieve ViewModels back!
+@model MvcWhatsUp.Models.VM.UserVM *@
+
+@{
+    //Viewdata dictionary which will allow you to cast it back to an object with keyword as - NICE!
+    var user = ViewData["Message"] as User;
+}
+
+<p>
+    @ViewData["Message"]
+</p>
+<p>
+    @user?.UserName (@user?.EmailAddress)
+</p>
+<p>
+    @Model.UserName (@Model.EmailAddress)
+</p>
+<p>
+    @TempData["ConfirmationMessage"]
+</p>

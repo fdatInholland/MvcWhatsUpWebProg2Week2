@@ -1,0 +1,48 @@
+﻿@model List<MvcWhatsUp.Models.User>
+
+@{
+    
+    ViewData["Title"] = "Users";
+    int loggedInUserId = -1;
+    if(ViewData["UserID"] is not null)
+    {
+        loggedInUserId = int.Parse(ViewData["UserID"].ToString());
+    }
+    //TODO
+    //User? loggedInUser = (User?)ViewData["LoggedInUser];
+
+}
+
+<div class="text-center">
+    <h1 class="display-4">Users</h1>
+    <p>Number of user in the list: @Model.Count</p>
+</div>
+
+<p>@TempData["ConfirmationMessage"]</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Mobile number</th>
+            <th>Email Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (User user in Model)
+            {
+                var rowStyle = "";
+                @if(user.UserID == loggedInUserId)
+                {
+                    rowStyle = "class=table-info"; 
+                }
+                <tr @rowStyle>
+                    <td>@user.UserName</td>
+                    <td>@user.MobileNumber</td>
+                    <td>@user.EmailAddress</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

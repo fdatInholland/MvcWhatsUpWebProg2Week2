@@ -1,0 +1,30 @@
+﻿@model MvcWhatsUp.Models.User
+
+@{
+    ViewData["Title"] = "Delete User";
+}
+
+<h1>Delete User</h1>
+
+<form action="/Users/Delete" method="POST">
+    <input hidden type="number" name="UserId" value="@Model?.UserID" />
+
+    <div class="form-group py-2">
+        <label for="UserName">Name:</label>
+        <input type="text" id="UserName" name="UserName" class="form-control" readonly value="@Model?.UserName" />
+    </div>
+
+    <div class="form-group py-2">
+        <label for="MobileNumber">Mobile number:</label>
+        <input type="text" id="MobileNumber" name="MobileNumber" class="form-control" readonly value="@Model?.MobileNumber" />
+    </div>
+
+    <div class="form-group py-2">
+        <label for="EmailAddress">Email address:</label>
+        <input type="text" id="EmailAddress" name="EmailAddress" class="form-control" readonly value="@Model?.EmailAddress" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Delete</button>
+</form>
+
+<a href="/Users/Index">Back to List</a>
