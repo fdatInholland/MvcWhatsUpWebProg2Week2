@@ -1,0 +1,57 @@
+﻿/* light.css */
+
+/* Set overall background and text color */
+body {
+    background-color: #ffffff;
+    color: #212121;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Links */
+a {
+    color: #1a73e8;
+}
+
+    a:hover {
+        color: #0b59d6;
+    }
+
+/* Header elements */
+h1, h2, h3, h4, h5, h6 {
+    color: #111111;
+}
+
+/* Navbar (if you use Bootstrap or similar) */
+.navbar {
+    background-color: #f8f9fa;
+}
+
+/* Buttons */
+button, .btn {
+    background-color: #e0e0e0;
+    color: #000000;
+    border: 1px solid #cccccc;
+}
+
+    button:hover, .btn:hover {
+        background-color: #d5d5d5;
+    }
+
+/* Card, container, or panel backgrounds */
+.card, .container, .panel {
+    background-color: #ffffff;
+    border-color: #dddddd;
+}
+
+/* Inputs, textareas */
+input, textarea, select {
+    background-color: #ffffff;
+    color: #212121;
+    border: 1px solid #cccccc;
+}
+
+/* Footer */
+footer {
+    background-color: #f1f1f1;
+    color: #555555;
+}

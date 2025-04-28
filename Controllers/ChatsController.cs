@@ -27,31 +27,31 @@ namespace MvcWhatsUp.Controllers
         [HttpGet]
         public IActionResult AddMessage(int? id)
         {
-            //Oh boy - its a mess
+            //Oh boy - its a mess - this should all go to a servicelayer!!!
             if (id is null)
             {
                 return NotFound();
             }
 
-            //user has to be logged in
-            string? loggedInUserId = Request.Cookies["UserID"];
-
             User? loggedInUser = HttpContext.Session.GetObject<User>("LoggedInUser");
 
-            if (loggedInUserId is null)
+            if (loggedInUser is null)
             {
-                return RedirectToAction("Login", "Users");
+                return RedirectToAction("Index", "Users");
             }
 
             //get the receiver user
             User? receiverUser = _usersRepository.GetUserByID(Convert.ToInt32(id));
+            if (receiverUser is null)
+            {
+                return RedirectToAction("Index", "Users");
+            }
+
             ViewData["ReceiverUser"] = receiverUser;
 
             Message message = new Message();
-
             message.SenderUserId = loggedInUser.UserID;
             message.ReceiverUserId = (int)id;
-            message.SenderUserId = Convert.ToInt32(loggedInUserId);
 
             return View(message);
         }
