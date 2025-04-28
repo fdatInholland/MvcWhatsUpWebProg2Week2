@@ -1,21 +1,14 @@
-﻿@model List<MvcWhatsUp.Models.User>
+﻿@model IEnumerable<MvcWhatsUp.Models.User>
 
 @{
     
     ViewData["Title"] = "Users";
-    int loggedInUserId = -1;
-    if(ViewData["UserID"] is not null)
-    {
-        loggedInUserId = int.Parse(ViewData["UserID"].ToString());
-    }
-    //TODO
-    //User? loggedInUser = (User?)ViewData["LoggedInUser];
+    User? loggedInUser = (User?)ViewData["LoggedInUser"];
 
 }
 
 <div class="text-center">
     <h1 class="display-4">Users</h1>
-    <p>Number of user in the list: @Model.Count</p>
 </div>
 
 <p>@TempData["ConfirmationMessage"]</p>
@@ -33,7 +26,7 @@
             foreach (User user in Model)
             {
                 var rowStyle = "";
-                @if(user.UserID == loggedInUserId)
+                @if(user.UserID == loggedInUser.UserID)
                 {
                     rowStyle = "class=table-info"; 
                 }

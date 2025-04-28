@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 using MvcWhatsUp.Models;
 using MvcWhatsUp.Models.Extensions;
-using MvcWhatsUp.Models.VM;
 using MvcWhatsUp.Repositories.Interfaces;
-using System.Text.Json;
 
 namespace MvcWhatsUp.Controllers
 {
@@ -36,22 +33,7 @@ namespace MvcWhatsUp.Controllers
             }
             else
             {
-                //TODO
-                //setting the sesssion here
-                //but can only do it for string types eg:
-                //HttpContext.Session.SetString("UserID", user.UserID.ToString());
-
-                //OR
-
-                //Serialize User object into a string object
-                //string userJson = JsonSerializer.Serialize(user);
-                //HttpContext.Session.SetString("LoggedInUser", userJson);
-
-                //OR
                 HttpContext.Session.SetObject("LoggedInUser", user);
-
-                Response.Cookies.Append("UserID", user.UserID.ToString());
-
                 return RedirectToAction("Index", "Users");
             }
         }
@@ -59,25 +41,9 @@ namespace MvcWhatsUp.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            //TODO
-            //User? loggedInUser = null;
-            //string? userJson = HttpContext.Session.GetString("LoggedInUser");
-            //if (userJson is not null)
-            //{
-            //    loggedInUser = JsonSerializer.Deserialize<User>(userJson);
-            //}
-
-            //passing the user object to the view
-            //ViewData["LoggedInUser"] = loggedInUser;
-
-            //OR with the extensionmethod
+            //With the extensionmethod
             User? loggedInUser = HttpContext.Session.GetObject<User>("LoggedInUser");
-
-            //ViewData["LoggedInUser"] = loggedInUser;
-
-            string? userID = Request.Cookies["UserID"];
-
-            ViewData["UserID"] = userID;
+            ViewData["LoggedInUser"] = loggedInUser;
 
             List<User> users = _usersRepository.GetAllUsers();
             return View(users);

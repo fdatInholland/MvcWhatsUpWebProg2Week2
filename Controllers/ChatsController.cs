@@ -20,7 +20,7 @@ namespace MvcWhatsUp.Controllers
 
         public IActionResult Index()
         {
-            
+
             return View();
         }
 
@@ -35,9 +35,8 @@ namespace MvcWhatsUp.Controllers
 
             //user has to be logged in
             string? loggedInUserId = Request.Cookies["UserID"];
-            
-            //TODO
-            //User? loggedInUser = HttpContext.Session.GetObject<User>("LoggedInUser");
+
+            User? loggedInUser = HttpContext.Session.GetObject<User>("LoggedInUser");
 
             if (loggedInUserId is null)
             {
@@ -49,10 +48,8 @@ namespace MvcWhatsUp.Controllers
             ViewData["ReceiverUser"] = receiverUser;
 
             Message message = new Message();
-            
-            //TODO
-            //message.SenderUserId = loggedInUser.UserId;
 
+            message.SenderUserId = loggedInUser.UserID;
             message.ReceiverUserId = (int)id;
             message.SenderUserId = Convert.ToInt32(loggedInUserId);
 
@@ -62,18 +59,12 @@ namespace MvcWhatsUp.Controllers
         [HttpPost]
         public IActionResult AddMessage(Message message)
         {
-            //EXAMPLE use of tailored exceptions
-            //if (string.IsNullOrEmpty(message.MessageText))
-            //{
-            //    throw new AddMessageException("Message text cannot be empty.");
-            //}
-
             try
             {
                 message.SendAt = DateTime.UtcNow;
                 _chatsRepository.AddMessage(message);
 
-                //ViewBag.ConfirmMessage = "Message has been added correctly!";
+                ViewBag.ConfirmMessage = "Message has been added correctly!";
 
                 //confirm
                 TempData["ConfirmMessage"] = "Message has been added correctly!";
@@ -97,7 +88,6 @@ namespace MvcWhatsUp.Controllers
 
             string? loggedInUserId = Request.Cookies["UserId"];
 
-            //TODO
             User? loggedInUser = HttpContext.Session.GetObject<User>("LoggedInUser");
 
             if (loggedInUserId is null)
@@ -116,28 +106,12 @@ namespace MvcWhatsUp.Controllers
             ViewData["sendingUser"] = sendingUser;
             ViewData["receivingUser"] = receiverUser;
 
-            //Was
-            //List<Message> chatMessages = _chatsRepository.GetMessages(sendingUser.UserID, receiverUser.UserID);
-
-            //REDONE to ChatViewModel
             ChatViewModel chatViewModel = new ChatViewModel(
-                _chatsRepository.GetMessages(sendingUser.UserID, receiverUser.UserID),
+                _chatsRepository.GetMessages(loggedInUser.UserID, receiverUser.UserID),
                 sendingUser,
                 receiverUser
             );
 
-            //TODO
-            ChatViewModel chatViewModel2 = new ChatViewModel(
-            _chatsRepository.GetMessages(loggedInUser.UserID, receiverUser.UserID),
-                sendingUser,
-                receiverUser
-                );
-
-
-            //Was
-            //return View(chatMessages);
-
-            //REDONE to ChatViewModel
             return View(chatViewModel);
         }
     }
